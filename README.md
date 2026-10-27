@@ -53,6 +53,83 @@ Socket programming finds applications in various domains, including web developm
 4.	Networked Games: Online multiplayer games rely on socket programming to facilitate communication between game clients and servers.
 5.	RPC mechanisms: which allow processes to execute code on a remote server, often use socket programming for communication.
 
+## Algorithm:
+
+1. Start the program.
+2. Create a socket using the `socket()` function.
+3. Assign the IP address and port number to the server.
+4. Bind the server socket using the `bind()` function.
+5. Listen for client connections using the `listen()` function.
+6. The client creates a socket and connects to the server using the `connect()` function.
+7. Accept the client connection using the `accept()` function.
+8. The client sends data to the server using the `send()` function.
+9. The server receives the data using the `recv()` function.
+10. The server sends a response to the client using the `send()` function.
+11. The client receives and displays the response using the `recv()` function.
+12. Close both client and server sockets using the `close()` function.
+13. Stop the program.
+
+## server client code:
+```
+import socket
+
+# Create socket
+server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+# Bind socket to IP and port
+host = '127.0.0.1'
+port = 12345
+server_socket.bind((host, port))
+
+# Listen for connections
+server_socket.listen(1)
+print("Server is waiting for connection...")
+
+# Accept client connection
+conn, addr = server_socket.accept()
+print("Connected to:", addr)
+
+# Receive data from client
+data = conn.recv(1024).decode()
+print("Client says:", data)
+
+# Send response to client
+message = "Hello Client, message received!"
+conn.send(message.encode())
+
+# Close connection
+conn.close()
+server_socket.close()
+```
+
+## client socket code:
+```
+import socket
+
+# Create socket
+client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+# Connect to server
+host = '127.0.0.1'
+port = 12345
+client_socket.connect((host, port))
+
+# Send message to server
+message = "Hello Server!"
+client_socket.send(message.encode())
+
+# Receive response from server
+data = client_socket.recv(1024).decode()
+print("Server says:", data)
+
+# Close socket
+client_socket.close()
+```
+## server output:
+<img width="1855" height="787" alt="Screenshot 2026-10-27 143449" src="https://github.com/user-attachments/assets/c8d6cd68-468b-400a-a866-c8cf92d22709" />
+
+## client output:
+<img width="1852" height="771" alt="Screenshot 2026-10-27 143533" src="https://github.com/user-attachments/assets/40a756ce-be9b-43c0-ae11-95aa4cb0e67a" />
 
 ## Result:
 Thus the study of Socket Programming Completed Successfully
